@@ -1,0 +1,5 @@
+---
+triple:          'arm64-apple-darwin'
+binary-path:     "/Users/sabrina/Downloads/Cours/Systeme avancée/syst-avance/tp03-threads/03-thread-sample "
+relocations:     []
+...
