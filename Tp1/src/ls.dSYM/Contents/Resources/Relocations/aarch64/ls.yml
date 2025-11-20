@@ -1,0 +1,5 @@
+---
+triple:          'arm64-apple-darwin'
+binary-path:     "/Users/sabrina/Downloads/Cours/Systeme avancée/tp1/01-syscalls_fs/src/ls"
+relocations:     []
+...
