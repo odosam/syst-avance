@@ -1,6 +1,6 @@
 #include "commandParser.h"
 
-char *concat(char *str[], int start, int end)
+char *concat(char *args[], int start, int end)
 {
     // tableau de caracteres pour stocker la commande
     static char command[1024] = "";
@@ -10,7 +10,7 @@ char *concat(char *str[], int start, int end)
     for (int i = start; i < end; i++)
     {
         // fonction strcat permet de concatener des chaines de caracteres
-        strcat(command, str[i]);
+        strcat(command, args[i]);
         // ajouter un espace entre les arguments
         if (i < end - 1)
         {
@@ -21,14 +21,14 @@ char *concat(char *str[], int start, int end)
     return command;
 }
 
-char getOperator(char *str)
+char getOperator(char *args)
 {
     // comparer la chaine de caracteres avec les operateurs && et ||
-    if (strcmp(str, "&&") == 0)
+    if (strcmp(args, "&&") == 0)
     {
         return SUCCESS_ONLY;
     }
-    else if (strcmp(str, "||") == 0)
+    else if (strcmp(args, "||") == 0)
     {
         return FAIL_ONLY;
     }
@@ -37,6 +37,14 @@ char getOperator(char *str)
     {
         return NONE;
     }
+}
+
+char isBackGroundOperator(char *args[], int argc)
+{
+    char *last = args[argc - 1];
+    int len = strlen(last);
+
+    return (len > 0 && last[len - 1] == '&');
 }
 
 // Fonction pour parser les commandes et les operateurs de controle
