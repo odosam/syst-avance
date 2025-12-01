@@ -12,3 +12,5 @@ char getOperator(char *str);
 struct Command *parseCommands(char *args[], int argc, int *numCommands);
 // Fonction pour vérifier la présence de l'opérateur d'exécution en arrière-plan
 char isBackGroundOperator(char *args[], int argc);
+
+void fillCommand(struct Command *cmd, char *args[], int start, int end);
