@@ -2,28 +2,29 @@
 
 char *concat(char *args[], int start, int end)
 {
-    // tableau de caracteres pour stocker la commande
+    // Tableau de caractères permettant de stocker la commande
     static char command[1024] = "";
     command[0] = '\0';
 
-    // boucle pour parcourir les arguments de la commande
+    // Boucle pour parcourir les arguments de la commande
     for (int i = start; i < end; i++)
     {
-        // fonction strcat permet de concatener des chaines de caracteres
+        // Appel à la fonction strcat permettant de concatener des chaînes de caractères
         strcat(command, args[i]);
-        // ajouter un espace entre les arguments
+
+        // Ajout d'un espace entre les arguments
         if (i < end - 1)
         {
-            // ajouter un espace entre les arguments
             strcat(command, " ");
         }
     }
     return command;
 }
 
-char getOperator(char *args)
+// Fonction permettant d'obtenir le type d'opérateur entre les commandes
+char  getOperator(char *args)
 {
-    // comparer la chaine de caracteres avec les operateurs && et ||
+    // Comparaison de la chaîne de caractères avec les différents opérateurs possibles
     if (strcmp(args, "&&") == 0)
     {
         return SUCCESS_ONLY;
@@ -32,6 +33,22 @@ char getOperator(char *args)
     {
         return FAIL_ONLY;
     }
+    else if (strcmp(args, ">") == 0)
+    {
+        return REDIR_OUT;
+    }
+    else if ( strcmp(args, "<") == 0)
+    {
+        return REDIR_IN;
+    }
+    else if (strcmp(args, ">>") == 0)
+    {
+        return REDIR_APPEND;
+    }
+    else if (strcmp(args, "<<") == 0)
+    {
+        return REDIR_MULTILINE;
+    }
     // aucun operateur
     else
     {
@@ -39,53 +56,90 @@ char getOperator(char *args)
     }
 }
 
+// Fonction pour savoir si la commande doit s'executer en arrière-plan ( présence de '&' dans le dernier argument )
 char isBackGroundOperator(char *args[], int argc)
 {
-    char *last = args[argc - 1];
-    int len = strlen(last);
+    char *last = args[argc - 1];    // Obtention du dernier argument
+    int len = strlen(last);         // Calcul de sa longueur
 
     return (len > 0 && last[len - 1] == '&');
 }
 
-// Fonction pour parser les commandes et les operateurs de controle
+// Fonction permettant de parser les différentes commandes en fonction des operateurs détectés
 struct Command *parseCommands(char *args[], int argc, int *numCommands)
 {
-    // tableau pour stocker les commandes
+    // Tableau qui stocke l'ensemble des commandes
     struct Command *commands = malloc(sizeof(struct Command) * 100);
+
     if (!commands)
         return NULL;
-    int commandIndex = 0;
+
+    int commandIndex = 0; // Indique à quelle position on est dans le tableau des commandes
     int start = 1;
 
-    // boucle pour parcourir les arguments
+    // Boucle pour parcourir les arguments et les séparer en commandes
     for (int i = 1; i < argc; i++)
     {
-        // obtenir le type d'operateur
+        // Obtient le type d'operateur
         char operatorType = getOperator(args[i]);
-        if (operatorType != NONE)
-        {
-            // stocker la commande precedente
+
+        if(operatorType == SUCCESS_ONLY || operatorType == FAIL_ONLY){
+            // On stocke la commande en cours 
             commands[commandIndex].start = start;
             commands[commandIndex].end = i;
             commands[commandIndex].operatorType = operatorType;
-            // incrementer l'index des commandes
-            commandIndex++;
-            // mettre a jour le debut de la prochaine commande
-            start = i + 1;
+            commands[commandIndex].redirType = NONE_REDIR;
+            commands[commandIndex].filename = NULL;
+
+            // Puis on incrémente l'index des commandes pour passer à la prochaine
+            commandIndex++; 
+            start = i + 1;  // La prochaine commande commence apres l'operateur
         }
+        else if(operatorType == REDIR_OUT || operatorType == REDIR_IN || operatorType == REDIR_APPEND || operatorType == REDIR_MULTILINE){
+            
+            // On stocke le type de redirection et le nom du fichier
+            commands[commandIndex].redirType = operatorType;
+
+            if(i + 1 < argc){
+                commands[commandIndex].filename = args[i + 1];
+                commands[commandIndex].end = i;
+            }
+            else{
+                fprintf(stderr,"Erreur : Nom de fichier manquant pour la redirection.\n");
+                commands[commandIndex].redirType = NONE_REDIR;
+                commands[commandIndex].filename = NULL;
+            }
+            
+            
+        }
+        
+        // // Si un operateur est détecté
+        // if (operatorType != NONE)
+        // {
+        //     // On stocke la commande en cours 
+        //     commands[commandIndex].start = start;
+        //     commands[commandIndex].end = i;
+        //     commands[commandIndex].operatorType = operatorType;
+
+        //     // Puis on incrémente l'index des commandes pour passer à la prochaine
+        //     commandIndex++; 
+        //     start = i + 1;  // La prochaine commande commence apres l'operateur
+        // }
     }
 
-    // Ajouter la dernière commande
+    // Ajoute la dernière commande (car elle n'est pas suivie d'un operateur) 
     if (start < argc)
     {
         // stocker la derniere commande
         commands[commandIndex].start = start;
         commands[commandIndex].end = argc;
         commands[commandIndex].operatorType = NONE;
+        commands[commandIndex].redirType = NONE_REDIR;
+        commands[commandIndex].filename = NULL;
         commandIndex++;
     }
-    // retourner le nombre de commandes parsees
-    *numCommands = commandIndex;
-    // retourner le tableau des commandes
-    return commands;
+
+    
+    *numCommands = commandIndex;    // Nombre total de commandes parsees
+    return commands;                // Retourne le tableau des commandes
 }
