@@ -1,10 +1,11 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include "commandParser.h"
 #include <unistd.h>
 #include <sys/types.h>
 #include <sys/wait.h>
 #include <fcntl.h>
+#include "commandParser.h"
+#include "historic.h"
 
 int main(int argc, char *argv[])
 {
@@ -25,6 +26,12 @@ int main(int argc, char *argv[])
     for (int i = 0; i < numCommands; i++)
     {
         struct Command cmd = commands[i];
+        saveCommand(concat(argv, cmd.start, cmd.end));
+        if (strcmp(argv[cmd.start], "history") == 0)
+        {
+            displayHistoric();
+            continue;
+        }
 
         // Création d'un processus fils
         pid_t pid = fork();
@@ -33,7 +40,6 @@ int main(int argc, char *argv[])
         if (pid == 0)
         {
             // 1 - Préparation des arguments de la commande à exécuter ---------------------------
-
             int maxArgs = (cmd.end > cmd.start) ? (cmd.end - cmd.start) : 0;
             char *cmd_argv[maxArgs + 1];
             int size = 0;
@@ -84,12 +90,9 @@ int main(int argc, char *argv[])
             // 3 - Gestion des redirections --------------------------------------------------
             if (cmd.redirType != NONE_REDIR && cmd.filename != NULL)
             {
-
                 int fd; // Desripteur de fichier pour la redirection
-
                 switch (cmd.redirType)
                 {
-
                 case REDIR_OUT:                                                  //  >
                     fd = open(cmd.filename, O_WRONLY | O_CREAT | O_TRUNC, 0644); // ouverture du fichier en écriture seule | crée si n'existe pas | vide s'il existe
                                                                                  // 0644 = permissions rw-r--r--

@@ -4,7 +4,7 @@ CFLAGS = -Wall -Wextra -g
 TARGET = bin/program
 
 # Fichiers sources et objets
-SRCS = main.c commandParser.c
+SRCS = main.c commandParser.c historic.c
 OBJS = $(SRCS:%.c=bin/%.o)
 
 # Règle par défaut
@@ -18,6 +18,9 @@ $(TARGET): $(OBJS)
 bin/%.o: %.c | bin
 	$(CC) $(CFLAGS) -c $< -o $@
 
+doc:
+	doxygen $(DOC_DIR)/doxygen.conf
+	
 # Créer le dossier bin
 bin:
 	mkdir bin
