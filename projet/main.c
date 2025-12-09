@@ -30,18 +30,14 @@ int main(int argc, char *argv[])
         args[i] = str;
     }
 
-    // Parse les commandes et les différents opérateurs
     struct Command *commands = parseCommands(args, argc, &numCommands);
     if (!commands)
     {
-        fprintf(stderr, "Erreur : échec du parsing des commandes.\n");
         return 1;
     }
 
-    // Check la présence de l'opérateur d'exécution en arrière-plan
     char isBg = isBackGroundOperator(argv, argc);
 
-    // Execute les commandes parsées
     for (int i = 0; i < numCommands; i++)
     {
         struct Command cmd = commands[i];
@@ -51,90 +47,57 @@ int main(int argc, char *argv[])
             displayHistoric();
             continue;
         }
-
-        // Création d'un processus fils
+        int pipefd[2];
+        int hasPipe = (cmd.pipeTo == 1 && i < numCommands - 1);
+        if (hasPipe)
+        {
+            pipe(pipefd);
+        }
         pid_t pid = fork();
-
-        // Si le processus fils fonctionne
         if (pid == 0)
         {
-            // 1 - Préparation des arguments de la commande à exécuter ---------------------------
             int maxArgs = (cmd.end > cmd.start) ? (cmd.end - cmd.start) : 0;
             char *cmd_argv[maxArgs + 1];
             int size = 0;
-
             int argIndex = cmd.start;
             while (argIndex < cmd.end)
             {
                 char *token = argv[argIndex];
                 char opType = getOperator(token);
-
-                if (opType == REDIR_OUT || opType == REDIR_IN || opType == REDIR_APPEND || opType == REDIR_MULTILINE)
+                if (opType == REDIR_OUT || opType == REDIR_IN || opType == REDIR_APPEND || opType == REDIR_MULTILINE || strcmp(token, "|") == 0)
                 {
-                    if (argIndex + 1 >= cmd.end)
-                    {
-                        fprintf(stderr, "Erreur : nom de fichier manquant pour la redirection.\n");
-                        exit(1);
-                    }
-                    argIndex += 2; // saute l'opérateur et son fichier
+                    argIndex++;
+                    if (opType != NONE && argIndex < cmd.end)
+                        argIndex++;
                     continue;
                 }
-
                 cmd_argv[size++] = token;
                 argIndex++;
             }
-
             cmd_argv[size] = NULL;
-
             if (size == 0)
                 exit(1);
-
-            // On récupère le dernier argument pour verifier la presence de '&'
             char *last = cmd_argv[size - 1];
             int len = strlen(last);
-
-            // si le dernier caractere est '&'
             if (len > 0 && last[len - 1] == '&')
             {
                 if (len == 1)
-                {
-                    // On remplace le '&' du dernier argument par NULL
                     cmd_argv[--size] = NULL;
-                }
                 else
-                    // le dernier caractere du dernier élement du tableau
                     last[len - 1] = '\0';
             }
-
-            // 3 - Gestion des redirections --------------------------------------------------
-            if (cmd.redirType != NONE_REDIR && cmd.filename != NULL)
+            if (strcmp(cmd_argv[0], "history") == 0)
             {
-                int fd; // Desripteur de fichier pour la redirection
-                switch (cmd.redirType)
+                displayHistoric();
+                exit(0);
+            }
+            for (int r = 0; r < cmd.numRedirs; r++)
+            {
+                int fd;
+                switch (cmd.redirType[r])
                 {
-                case REDIR_OUT:                                                  //  >
-                    fd = open(cmd.filename, O_WRONLY | O_CREAT | O_TRUNC, 0644); // ouverture du fichier en écriture seule | crée si n'existe pas | vide s'il existe
-                                                                                 // 0644 = permissions rw-r--r--
-                    if (fd < 0)
-                    {
-                        perror("open");
-                        exit(1);
-                    }
-                    dup2(fd, STDOUT_FILENO); // redirige la sortie standard vers le fichier
-                    close(fd);               // ferme le descripteur de fichier
-                    break;
-                case REDIR_IN:                         //  <
-                    fd = open(cmd.filename, O_RDONLY); // ouverture du fichier en lecture seule
-                    if (fd < 0)
-                    {
-                        perror("open");
-                        exit(1);
-                    }
-                    dup2(fd, STDIN_FILENO);
-                    close(fd);
-                    break;
-                case REDIR_APPEND:                                                //  >>
-                    fd = open(cmd.filename, O_WRONLY | O_CREAT | O_APPEND, 0644); // ouverture du fichier en écriture seule | crée si n'existe pas | ajoute à la fin s'il existe
+                case REDIR_OUT:
+                    fd = open(cmd.filename[r], O_WRONLY | O_CREAT | O_TRUNC, 0644);
                     if (fd < 0)
                     {
                         perror("open");
@@ -143,23 +106,154 @@ int main(int argc, char *argv[])
                     dup2(fd, STDOUT_FILENO);
                     close(fd);
                     break;
-                // case REDIR_MULTILINE: //  <<
-                //     break;
+                case REDIR_IN:
+                    fd = open(cmd.filename[r], O_RDONLY);
+                    if (fd < 0)
+                    {
+                        perror("open");
+                        exit(1);
+                    }
+                    dup2(fd, STDIN_FILENO);
+                    close(fd);
+                    break;
+                case REDIR_APPEND:
+                    fd = open(cmd.filename[r], O_WRONLY | O_CREAT | O_APPEND, 0644);
+                    if (fd < 0)
+                    {
+                        perror("open");
+                        exit(1);
+                    }
+                    dup2(fd, STDOUT_FILENO);
+                    close(fd);
+                    break;
+                case REDIR_MULTILINE:
+                {
+                    int pipefd_heredoc[2];
+                    pipe(pipefd_heredoc);
+                    pid_t heredoc_pid = fork();
+                    if (heredoc_pid == 0)
+                    {
+                        close(pipefd_heredoc[0]);
+                        char buffer[1024];
+                        while (1)
+                        {
+                            printf("> ");
+                            fflush(stdout);
+                            if (!fgets(buffer, sizeof(buffer), stdin))
+                                break;
+                            if (strncmp(buffer, cmd.filename[r], strlen(cmd.filename[r])) == 0 && buffer[strlen(cmd.filename[r])] == '\n')
+                                break;
+                            write(pipefd_heredoc[1], buffer, strlen(buffer));
+                        }
+                        close(pipefd_heredoc[1]);
+                        exit(0);
+                    }
+                    else
+                    {
+                        close(pipefd_heredoc[1]);
+                        dup2(pipefd_heredoc[0], STDIN_FILENO);
+                        close(pipefd_heredoc[0]);
+                        waitpid(heredoc_pid, NULL, 0);
+                    }
+                    break;
+                }
                 default:
                     break;
                 }
             }
-
-            // déplace le flux d'exécution vers la commande
+            if (hasPipe)
+            {
+                close(pipefd[0]);
+                dup2(pipefd[1], STDOUT_FILENO);
+                close(pipefd[1]);
+            }
             execvp(cmd_argv[0], cmd_argv);
-            // si execvp échoue
             perror("execvp");
             exit(1);
         }
         else if (pid > 0)
         {
+            {
+                close(pipefd[1]);
+                int nextPid = fork();
+                if (nextPid == 0)
+                {
+                    dup2(pipefd[0], STDIN_FILENO);
+                    close(pipefd[0]);
+                    struct Command nextCmd = commands[i + 1];
+                    int maxArgs2 = (nextCmd.end > nextCmd.start) ? (nextCmd.end - nextCmd.start) : 0;
+                    char *cmd_argv2[maxArgs2 + 1];
+                    int size2 = 0;
+                    int argIndex2 = nextCmd.start;
+                    while (argIndex2 < nextCmd.end)
+                    {
+                        char *token2 = argv[argIndex2];
+                        char opType2 = getOperator(token2);
+                        if (opType2 == REDIR_OUT || opType2 == REDIR_IN || opType2 == REDIR_APPEND || opType2 == REDIR_MULTILINE || strcmp(token2, "|") == 0)
+                        {
+                            argIndex2++;
+                            if (opType2 != NONE && argIndex2 < nextCmd.end)
+                                argIndex2++;
+                            continue;
+                        }
+                        cmd_argv2[size2++] = token2;
+                        argIndex2++;
+                    }
+                    cmd_argv2[size2] = NULL;
+                    for (int r2 = 0; r2 < nextCmd.numRedirs; r2++)
+                    {
+                        int fd2;
+                        switch (nextCmd.redirType[r2])
+                        {
+                        case REDIR_OUT:
+                            fd2 = open(nextCmd.filename[r2], O_WRONLY | O_CREAT | O_TRUNC, 0644);
+                            if (fd2 < 0)
+                            {
+                                perror("open");
+                                exit(1);
+                            }
+                            dup2(fd2, STDOUT_FILENO);
+                            close(fd2);
+                            break;
+                        case REDIR_IN:
+                            fd2 = open(nextCmd.filename[r2], O_RDONLY);
+                            if (fd2 < 0)
+                            {
+                                perror("open");
+                                exit(1);
+                            }
+                            dup2(fd2, STDIN_FILENO);
+                            close(fd2);
+                            break;
+                        case REDIR_APPEND:
+                            fd2 = open(nextCmd.filename[r2], O_WRONLY | O_CREAT | O_APPEND, 0644);
+                            if (fd2 < 0)
+                            {
+                                perror("open");
+                                exit(1);
+                            }
+                            dup2(fd2, STDOUT_FILENO);
+                            close(fd2);
+                            break;
+                        case REDIR_MULTILINE:
+                            // heredoc à implémenter plus tard
+                            break;
+                        default:
+                            break;
+                        }
+                    }
+                    execvp(cmd_argv2[0], cmd_argv2);
+                    perror("execvp");
+                    exit(1);
+                }
+                else if (nextPid > 0)
+                {
+                    close(pipefd[0]);
+                    waitpid(nextPid, NULL, 0);
+                    i++; // saute la commande suivante car déjà exécutée
+                }
+            }
             if (!isBg)
-                // attendre la fin du processus avant d'envoyer la prochaine commande
                 waitpid(pid, NULL, 0);
         }
         else
@@ -169,8 +263,4 @@ int main(int argc, char *argv[])
             return 1;
         }
     }
-
-    // libérer la mémoire allouée
-    free(commands);
-    return 0;
 }

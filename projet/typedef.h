@@ -1,15 +1,12 @@
 #pragma once
 #include <stdio.h>
 
-// Enum pour les types d'opérateurs de contrôle
 enum CommandControlOperator
 {
     NONE = 0,
     SUCCESS_ONLY = 10,
     FAIL_ONLY = 11
 };
-
-// Enum pour les types de redirections
 enum RedirectionType
 {
     NONE_REDIR = 0,
@@ -18,13 +15,13 @@ enum RedirectionType
     REDIR_APPEND = 22,   // >>
     REDIR_MULTILINE = 23 // <<
 };
-
-// Structure pour stocker les informations d'une commandes
 struct Command
 {
     int start;
     int end;
     enum CommandControlOperator operatorType;
-    enum RedirectionType redirType;
-    char *filename;
+    enum RedirectionType redirType[4]; // supporte jusqu'à 4 redirections
+    char *filename[4];
+    int numRedirs;
+    int pipeTo; // index de la commande suivante si pipe, -1 sinon
 };

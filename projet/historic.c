@@ -22,9 +22,16 @@ void displayHistoric()
     }
 
     char command[1024];
-    while (fgets(command, 1024, file) != 0)
+    while (1)
     {
+        char *res = fgets(command, 1024, file);
+        if (res == NULL)
+        {
+            break;
+        }
         printf("%s", command);
+        fflush(stdout);
     }
     fclose(file);
+    fflush(stdout);
 }
