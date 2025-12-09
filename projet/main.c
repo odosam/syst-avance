@@ -10,9 +10,28 @@
 int main(int argc, char *argv[])
 {
     int numCommands;
+    int argCount = 0;
+    char *args[1024];
+    for (int i = 0; i < argc; i++, argCount++)
+    {
+        char *str = argv[i];
+        int len = strlen(str);
+        for (int j = 0; j < len; j++)
+        {
+            if (str[j] == ' ')
+            {
+                str[j] = '\0';
+                args[argCount++] = str;
+                str += (j + 1);
+                j = -1;
+            }
+        }
+
+        args[i] = str;
+    }
 
     // Parse les commandes et les différents opérateurs
-    struct Command *commands = parseCommands(argv, argc, &numCommands);
+    struct Command *commands = parseCommands(args, argc, &numCommands);
     if (!commands)
     {
         fprintf(stderr, "Erreur : échec du parsing des commandes.\n");

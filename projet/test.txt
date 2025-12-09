@@ -1,4 +1,0 @@
-./bin/program -c "ls -l"
-./bin/program -f "commands.txt"
-echo "ls -l" | ./bin/program
-./bin/program < commands.txtHello World6662
