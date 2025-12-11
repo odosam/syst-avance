@@ -139,3 +139,106 @@ struct Command *parseCommands(char *args[], int argc, int *numCommands)
     *numCommands = commandIndex;
     return commands;
 }
+
+int isBuiltinCommand(char *cmd){
+
+    return (
+        strcmp(cmd, "cd") == 0 ||
+        strcmp(cmd, "pwd") == 0 ||
+        strcmp(cmd, "echo") == 0 ||
+        strcmp(cmd, "exit") == 0 
+    );
+}
+
+
+
+int builtin_cd(char **args) {
+
+    if (args[1] == NULL) {
+        fprintf(stderr, "cd: missing argument\n");
+        return 1;
+    }
+    if (chdir(args[1]) != 0) {
+        perror("cd");
+        return 1;
+    }
+    return 0;
+}
+
+int builtin_pwd() {
+    char buffer[1024];
+
+    if (getcwd(buffer, sizeof(buffer)) != NULL) {
+        printf("%s\n", buffer);
+    } else {
+        perror("pwd");
+        return 1;
+    }
+    return 0;
+}
+
+int builtin_echo(char **args) {
+
+    for (int i = 1; args[i] != NULL; i++){
+        printf("%s", args[i]);
+        if(args[i + 1] != NULL){
+            printf(" ");
+        }
+    }
+    printf("\n");
+    return 0;
+}
+
+int builtin_exit(char **args) {
+    exit(0);
+    return 0; 
+}
+
+int runBuiltinCommand(char **args){
+
+    if (strcmp(args[0], "cd") == 0) 
+        return builtin_cd(args);
+    else if (strcmp(args[0], "pwd") == 0)
+        return builtin_pwd();
+    else if (strcmp(args[0], "echo") == 0)
+        return builtin_echo(args);
+    else if (strcmp(args[0], "exit") == 0)
+        exit(0);
+    
+    return -1; 
+}
+
+int isExportCommand(char *cmd){
+
+    return (strcmp(cmd, "export") == 0);
+}
+
+int runExportCommand(char **args){
+
+    if(args[1] == NULL){
+        fprintf(stderr, "export: missing argument\n");
+        return 1;
+    }
+
+    char *equalSign = strchr(args[1], '=');
+    if(!equalSign){
+        fprintf(stderr, "export: invalid format, use KEY=VALUE\n");
+        return 1;
+    }
+
+    *equalSign = '\0';
+    char *varName = args[1];
+    char *varValue = equalSign + 1;
+
+    if(setenv(varName, varValue, 1) != 0){
+        perror("setenv");
+        return 1;
+    }
+    else{
+        printf("Exported: %s=%s\n", varName, varValue);
+    }
+
+    return 0;
+}
+
+

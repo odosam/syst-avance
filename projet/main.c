@@ -41,44 +41,79 @@ int main(int argc, char *argv[])
     for (int i = 0; i < numCommands; i++)
     {
         struct Command cmd = commands[i];
+        int maxArgs = (cmd.end > cmd.start) ? (cmd.end - cmd.start) : 0;
+        char *cmd_argv[maxArgs + 1];
+
+        int size = 0;
+        int argIndex = cmd.start;
+
+        while (argIndex < cmd.end)
+        {
+            char *token = argv[argIndex];
+            char opType = getOperator(token);
+            if (opType == REDIR_OUT || opType == REDIR_IN || opType == REDIR_APPEND || opType == REDIR_MULTILINE || strcmp(token, "|") == 0)
+            {
+                argIndex++;
+                if (opType != NONE && argIndex < cmd.end)
+                    argIndex++;
+                continue;
+            }
+
+            cmd_argv[size++] = token;
+            argIndex++;
+        }
+
+        cmd_argv[size] = NULL;
+
+
+
         saveCommand(concat(argv, cmd.start, cmd.end));
+
         if (strcmp(argv[cmd.start], "history") == 0)
         {
             displayHistoric();
             continue;
         }
+
+        if(size > 0 && isExportCommand(cmd_argv[0])){
+           runExportCommand(cmd_argv);
+           continue;
+        }
+
+
+        if(size > 0 && isBuiltinCommand(cmd_argv[0])){
+           runBuiltinCommand(cmd_argv);
+           continue;
+        }
+
+        
+
         int pipefd[2];
         int hasPipe = (cmd.pipeTo == 1 && i < numCommands - 1);
+
         if (hasPipe)
         {
             pipe(pipefd);
         }
+
+
+
+        
+
+
         pid_t pid = fork();
+
         if (pid == 0)
         {
-            int maxArgs = (cmd.end > cmd.start) ? (cmd.end - cmd.start) : 0;
-            char *cmd_argv[maxArgs + 1];
-            int size = 0;
-            int argIndex = cmd.start;
-            while (argIndex < cmd.end)
-            {
-                char *token = argv[argIndex];
-                char opType = getOperator(token);
-                if (opType == REDIR_OUT || opType == REDIR_IN || opType == REDIR_APPEND || opType == REDIR_MULTILINE || strcmp(token, "|") == 0)
-                {
-                    argIndex++;
-                    if (opType != NONE && argIndex < cmd.end)
-                        argIndex++;
-                    continue;
-                }
-                cmd_argv[size++] = token;
-                argIndex++;
-            }
-            cmd_argv[size] = NULL;
+            
+            
+
             if (size == 0)
                 exit(1);
+
             char *last = cmd_argv[size - 1];
             int len = strlen(last);
+
             if (len > 0 && last[len - 1] == '&')
             {
                 if (len == 1)
@@ -86,14 +121,17 @@ int main(int argc, char *argv[])
                 else
                     last[len - 1] = '\0';
             }
+
             if (strcmp(cmd_argv[0], "history") == 0)
             {
                 displayHistoric();
                 exit(0);
             }
+
             for (int r = 0; r < cmd.numRedirs; r++)
             {
                 int fd;
+
                 switch (cmd.redirType[r])
                 {
                 case REDIR_OUT:
@@ -161,6 +199,7 @@ int main(int argc, char *argv[])
                     break;
                 }
             }
+
             if (hasPipe)
             {
                 close(pipefd[0]);
