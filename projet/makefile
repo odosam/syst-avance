@@ -4,7 +4,7 @@ CFLAGS = -Wall -Wextra -g
 TARGET = bin/program
 
 # Fichiers sources et objets
-SRCS = main.c commandParser.c historic.c
+SRCS = main.c commandParser.c historic.c alias.c
 OBJS = $(SRCS:%.c=bin/%.o)
 
 # Règle par défaut

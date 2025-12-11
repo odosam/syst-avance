@@ -6,6 +6,7 @@
 #include <fcntl.h>
 #include "commandParser.h"
 #include "historic.h"
+#include "alias.h"
 
 int main(int argc, char *argv[])
 {
@@ -65,6 +66,42 @@ int main(int argc, char *argv[])
 
         cmd_argv[size] = NULL;
 
+        char *aliasValue = getAliasValue(cmd_argv[0]);
+        if (aliasValue != NULL) {
+            // Décomposer l'alias en plusieurs tokens
+            char *tokens[1024];
+            int k = 0;
+            char *temp = strdup(aliasValue);  // copie de l'alias
+            char *token = strtok(temp, " ");
+            while (token != NULL && k < 1023) {
+                tokens[k++] = token;
+                token = strtok(NULL, " ");
+            }
+            tokens[k] = NULL;
+
+            for (int j = 0; j < k; j++)
+                cmd_argv[j] = tokens[j];
+            cmd_argv[k] = NULL;
+            size = k;
+
+        }
+
+        // Si c'est la commande alias elle-même
+        if (strcmp(cmd_argv[0], "alias") == 0) {
+            if (size == 1) {
+                listAliases(); 
+            } else {
+                char *eq = strchr(cmd_argv[1], '=');
+                if (eq != NULL) {
+                    *eq = '\0';
+                    addAlias(cmd_argv[1], eq + 1);
+                } else {
+                    fprintf(stderr, "alias: invalid format\n");
+                }
+            }
+            continue; 
+        }
+ 
 
 
         saveCommand(concat(argv, cmd.start, cmd.end));
@@ -95,11 +132,6 @@ int main(int argc, char *argv[])
         {
             pipe(pipefd);
         }
-
-
-
-        
-
 
         pid_t pid = fork();
 
