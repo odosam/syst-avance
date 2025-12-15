@@ -1,0 +1,107 @@
+.TH Minishell 1 "2025" "Minishell" "User Commands"
+
+.SH NAME
+minishell \- a simple Unix mini shell that allows you to run commands with pipes, redirections, and internal commands.
+
+.SH SYNOPSIS
+.B minishell
+.I [command] [option]
+
+.SH DESCRIPTION
+minishell is a minimalist shell implemented in C.
+It allows users to execute Unix commands, use redirections, pipes, history, aliases and .
+
+.SH FEATURES
+.TP
+.B ls
+Lists the files in the current directory. 
+.I -l
+with details (permissions, size, date).
+
+.TP
+.B ps
+Displays the list of processes currently running for the current user.
+
+.TP
+.B who
+Displays the users currently logged into the system.
+
+.TP
+.B pwd
+Displays the current directory.
+
+.TP
+.B cd [directory]
+Changes the current directory.
+
+.TP
+.B echo [text]
+Displays the entered text. 
+
+.TP
+.B export VAR=VALUE
+Sets an environment variable.  
+Example: 
+.B export PATH=/usr/local/bin:$PATH
+
+.TP
+.B alias
+.I name=“command”
+Creates an alias for a command.
+.Br
+Example: 
+.B alias ll='ls -l'
+
+.TP
+.B exit
+Exit the shell.
+
+.SH REDIRECTIONS
+minishell supports standard redirections:
+
+.TP
+.B >
+Redirects standard output to a file (overwrites the existing file).
+
+.TP
+.B >>
+Redirects standard output to a file (adds to the end of the file).
+
+.TP
+.B <
+Redirects standard input from a file.
+
+.TP
+.B <<
+‘Here document’ type redirection (reads from standard input up to a keyword).
+
+.SH PIPES
+minishell supports the pipe `|` to connect the output of one command to the input of another.
+
+.SH BACKGROUND
+Use `&` at the end of a command to run it in the background.
+
+.SH EXAMPLES
+
+.TP
+.B echo Hello World
+Displays ‘Hello World’ in the terminal.
+
+.TP
+.B export PATH=/usr/local/bin:$PATH
+Adds /usr/local/bin to the user's PATH.
+
+.TP
+.B alias ll=“ls -l”
+Creates an alias `ll` for `ls -l`.
+
+.TP
+.B history
+Displays the last commands executed.
+
+.TP
+.B ls -l
+Lists the files in the current directory with details (permissions, size, date).
+
+.SH AUTHOR
+Aude Bruant and Sabrina Al Hammuti 
