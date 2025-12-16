@@ -15,7 +15,7 @@ It allows users to execute Unix commands, use redirections, pipes, history, alia
 .TP
 .B ls
 Lists the files in the current directory. 
-.I -l
+.I -al
 with details (permissions, size, date).
 
 .TP
@@ -46,11 +46,11 @@ Example:
 
 .TP
 .B alias
-.I name=“command”
+.I name='command'
 Creates an alias for a command.
 .Br
 Example: 
-.B alias ll='ls -l'
+.B alias ll='ls -al'
 
 .TP
 .B exit
@@ -61,11 +61,11 @@ minishell supports standard redirections:
 
 .TP
 .B >
-Redirects standard output to a file (overwrites the existing file).
+Redirects the standard output of a command to a file, overwriting its contents if the file already exists.
 
 .TP
 .B >>
-Redirects standard output to a file (adds to the end of the file).
+Redirects standard output to a file at the end of the file.
 
 .TP
 .B <
@@ -73,10 +73,11 @@ Redirects standard input from a file.
 
 .TP
 .B <<
-‘Here document’ type redirection (reads from standard input up to a keyword).
+Provides a here document, allowing multi-line input to be passed to a command.
 
 .SH PIPES
 minishell supports the pipe `|` to connect the output of one command to the input of another.
+minishell also supports logical operators `&&` and `||` to conditionally execute commands based on the success or failure of the previous command.
 
 .SH BACKGROUND
 Use `&` at the end of a command to run it in the background.
@@ -92,8 +93,8 @@ Displays ‘Hello World’ in the terminal.
 Adds /usr/local/bin to the user's PATH.
 
 .TP
-.B alias ll=“ls -l”
-Creates an alias `ll` for `ls -l`.
+.B alias ll=“ls -al”
+Creates an alias `ll` for `ls -al`.
 
 .TP
 .B history
