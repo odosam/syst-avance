@@ -1,39 +1,35 @@
-# Compilateur et options
 CC = gcc
 CFLAGS = -Wall -Wextra -g
 TARGET = bin/program
 
-# Fichiers sources et objets
-SRCS = main.c commandParser.c historic.c alias.c
-OBJS = $(SRCS:%.c=bin/%.o)
+SRCS := $(shell find . -name '*.c' -type f | sed 's|^\./||')
+OBJS := $(patsubst %.c,bin/%.o,$(SRCS))
 
-# Règle par défaut
 all: $(TARGET)
 
-# Créer le répertoire bin s'il n'existe pas et compiler le programme
 $(TARGET): $(OBJS)
-	$(CC) $(CFLAGS) -o $(TARGET) $(OBJS)
+	$(CC) $(CFLAGS) -o $@ $(OBJS)
 
-# Compiler les fichiers .c en .o dans le dossier bin
-bin/%.o: %.c | bin
-	$(CC) $(CFLAGS) -c $< -o $@
+define make-compile-rule
+$(1): $(2)
+	@mkdir -p $$(dir $(1))
+	$(CC) $(CFLAGS) -c $(2) -o $(1)
+endef
 
-doc:
-	doxygen $(DOC_DIR)/doxygen.conf
-	
-# Créer le dossier bin
-bin:
-	mkdir bin
+$(foreach src,$(SRCS),$(eval $(call make-compile-rule,bin/$(src:.c=.o),$(src))))
 
-# Nettoyer les fichiers compilés
 clean:
-	rmdir /s /q bin 2>nul || true
+	rm -rf bin
 
-# Recompiler entièrement
 rebuild: clean all
 
-# Exécuter le programme
 run: $(TARGET)
-	$(TARGET)
+	./$(TARGET)
 
-.PHONY: all clean rebuild run
+doc:
+	doxygen Doxyfile
+
+clean-doc:
+	rm -rf doc
+
+.PHONY: all clean rebuild run doc clean-doc
