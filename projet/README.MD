@@ -32,5 +32,5 @@ make
 
 Run the shell : 
 ```bash
-./minishell
+./bin/program
 ```
