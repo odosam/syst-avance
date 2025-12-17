@@ -34,3 +34,8 @@ Run the shell :
 ```bash
 ./bin/program
 ```
+
+Run the manual : 
+```bash
+man ./minishell.1
+```
