@@ -1,0 +1,7 @@
+<map id="commands/history/history.h" name="commands/history/history.h">
+<area shape="rect" id="Node000001" title="Gestion de l&#39;historique des commandes." alt="" coords="5,5,208,31"/>
+<area shape="rect" id="Node000002" title=" " alt="" coords="17,79,84,104"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="100,33,70,69,66,66,95,29"/>
+<area shape="rect" id="Node000003" href="$command_8h.html" title="Définitions des structures de commandes du shell." alt="" coords="109,79,219,104"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="118,29,148,66,144,70,114,33"/>
+</map>

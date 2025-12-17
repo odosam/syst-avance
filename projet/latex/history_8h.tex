@@ -1,0 +1,62 @@
+\doxysection{commands/history/history.h File Reference}
+\hypertarget{history_8h}{}\label{history_8h}\index{commands/history/history.h@{commands/history/history.h}}
+
+
+Gestion de l\textquotesingle{}historique des commandes.  
+
+
+{\ttfamily \#include $<$stdio.\+h$>$}\newline
+{\ttfamily \#include "{}../command.\+h"{}}\newline
+Include dependency graph for history.\+h\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=241pt]{history_8h__incl}
+\end{center}
+\end{figure}
+This graph shows which files directly or indirectly include this file\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=245pt]{history_8h__dep__incl}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{history_8h_ae41c75682d94c3f1a2c7e1e28ed0391a}\label{history_8h_ae41c75682d94c3f1a2c7e1e28ed0391a} 
+\#define {\bfseries HISTORY\+\_\+\+FILE}~"{}historic.\+txt"{}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{history_8h_a0aadb4d4cf244ac5a60740e03f84e114}{add\+To\+History}} (struct \mbox{\hyperlink{structCommand}{Command}} \texorpdfstring{$\ast$}{*}cmd)
+\begin{DoxyCompactList}\small\item\em Ajoute une commande à l\textquotesingle{}historique. \end{DoxyCompactList}\item 
+\Hypertarget{history_8h_a478ac1b18e4d00275c6099bf6e3b9fc6}\label{history_8h_a478ac1b18e4d00275c6099bf6e3b9fc6} 
+void {\bfseries show\+History} (void)
+\begin{DoxyCompactList}\small\item\em Affiche l\textquotesingle{}historique des commandes. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Gestion de l\textquotesingle{}historique des commandes. 
+
+
+
+\doxysubsection{Function Documentation}
+\Hypertarget{history_8h_a0aadb4d4cf244ac5a60740e03f84e114}\label{history_8h_a0aadb4d4cf244ac5a60740e03f84e114} 
+\index{history.h@{history.h}!addToHistory@{addToHistory}}
+\index{addToHistory@{addToHistory}!history.h@{history.h}}
+\doxysubsubsection{\texorpdfstring{addToHistory()}{addToHistory()}}
+{\footnotesize\ttfamily void add\+To\+History (\begin{DoxyParamCaption}\item[{struct \mbox{\hyperlink{structCommand}{Command}} \texorpdfstring{$\ast$}{*}}]{cmd }\end{DoxyParamCaption})}
+
+
+
+Ajoute une commande à l\textquotesingle{}historique. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em cmd} & La commande à ajouter. \\
+\hline
+\end{DoxyParams}

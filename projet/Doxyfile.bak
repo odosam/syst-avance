@@ -1,0 +1,15 @@
+PROJECT_NAME           = "Mini Shell"
+PROJECT_BRIEF          = "Interpréteur de commandes shell en C"
+OUTPUT_DIRECTORY       = doc
+INPUT                  = . commands utils state
+FILE_PATTERNS          = *.h *.c
+RECURSIVE              = YES
+EXTRACT_ALL            = YES
+EXTRACT_STATIC         = YES
+GENERATE_HTML          = YES
+GENERATE_LATEX         = NO
+HTML_OUTPUT            = html
+OPTIMIZE_OUTPUT_FOR_C  = YES
+TYPEDEF_HIDES_STRUCT   = YES
+QUIET                  = YES
+WARNINGS               = YES

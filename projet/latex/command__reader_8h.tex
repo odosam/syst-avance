@@ -1,0 +1,96 @@
+\doxysection{commands/command\+\_\+reader.h File Reference}
+\hypertarget{command__reader_8h}{}\label{command__reader_8h}\index{commands/command\_reader.h@{commands/command\_reader.h}}
+
+
+Lecture et parsing des lignes de commande.  
+
+
+{\ttfamily \#include $<$stdlib.\+h$>$}\newline
+{\ttfamily \#include $<$stdio.\+h$>$}\newline
+{\ttfamily \#include $<$string.\+h$>$}\newline
+{\ttfamily \#include "{}command.\+h"{}}\newline
+{\ttfamily \#include "{}../utils/string\+Helper.\+h"{}}\newline
+{\ttfamily \#include "{}env\+\_\+vars/env\+\_\+vars.\+h"{}}\newline
+{\ttfamily \#include "{}alias/aliases.\+h"{}}\newline
+Include dependency graph for command\+\_\+reader.\+h\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{command__reader_8h__incl}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{command__reader_8h_a73350f67992cc1615e00944d68cef613}\label{command__reader_8h_a73350f67992cc1615e00944d68cef613} 
+\#define {\bfseries MAX\+\_\+\+COMMANDS\+\_\+\+PER\+\_\+\+LINE}~10
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+char \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{command__reader_8h_af3a5b13f2bc879eda3b9cab8394b07d4}{read\+Command\+Line}} (void)
+\begin{DoxyCompactList}\small\item\em Lit une ligne de commande depuis stdin. \end{DoxyCompactList}\item 
+struct \mbox{\hyperlink{structCommand}{Command}} \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{command__reader_8h_a73cb9a8d41f0fb19926e6f1e98963c61}{parse\+Command}} (char \texorpdfstring{$\ast$}{*}command\+Line, int \texorpdfstring{$\ast$}{*}command\+Count)
+\begin{DoxyCompactList}\small\item\em Parse une ligne de commande en tableau de commandes. \end{DoxyCompactList}\item 
+enum \mbox{\hyperlink{command_8h_a7215803e478cdd4bdf4f1b8087cae87b}{Operator}} \mbox{\hyperlink{command__reader_8h_a18986b6dfd2065c8fb8c94b74a7422a2}{get\+Operator}} (const char \texorpdfstring{$\ast$}{*}token)
+\begin{DoxyCompactList}\small\item\em Retourne l\textquotesingle{}opérateur correspondant à un token. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Lecture et parsing des lignes de commande. 
+
+
+
+\doxysubsection{Function Documentation}
+\Hypertarget{command__reader_8h_a18986b6dfd2065c8fb8c94b74a7422a2}\label{command__reader_8h_a18986b6dfd2065c8fb8c94b74a7422a2} 
+\index{command\_reader.h@{command\_reader.h}!getOperator@{getOperator}}
+\index{getOperator@{getOperator}!command\_reader.h@{command\_reader.h}}
+\doxysubsubsection{\texorpdfstring{getOperator()}{getOperator()}}
+{\footnotesize\ttfamily enum \mbox{\hyperlink{command_8h_a7215803e478cdd4bdf4f1b8087cae87b}{Operator}} get\+Operator (\begin{DoxyParamCaption}\item[{const char \texorpdfstring{$\ast$}{*}}]{token }\end{DoxyParamCaption})}
+
+
+
+Retourne l\textquotesingle{}opérateur correspondant à un token. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em token} & Le token à analyser. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+L\textquotesingle{}opérateur correspondant, ou OP\+\_\+\+NONE si ce n\textquotesingle{}est pas un opérateur. 
+\end{DoxyReturn}
+\Hypertarget{command__reader_8h_a73cb9a8d41f0fb19926e6f1e98963c61}\label{command__reader_8h_a73cb9a8d41f0fb19926e6f1e98963c61} 
+\index{command\_reader.h@{command\_reader.h}!parseCommand@{parseCommand}}
+\index{parseCommand@{parseCommand}!command\_reader.h@{command\_reader.h}}
+\doxysubsubsection{\texorpdfstring{parseCommand()}{parseCommand()}}
+{\footnotesize\ttfamily struct \mbox{\hyperlink{structCommand}{Command}} \texorpdfstring{$\ast$}{*} parse\+Command (\begin{DoxyParamCaption}\item[{char \texorpdfstring{$\ast$}{*}}]{command\+Line,  }\item[{int \texorpdfstring{$\ast$}{*}}]{command\+Count }\end{DoxyParamCaption})}
+
+
+
+Parse une ligne de commande en tableau de commandes. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em command\+Line} & La ligne de commande à parser. \\
+\hline
+{\em command\+Count} & Pointeur vers le nombre de commandes parsées (sortie). \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Tableau de commandes alloué dynamiquement, ou NULL si erreur. 
+\end{DoxyReturn}
+\Hypertarget{command__reader_8h_af3a5b13f2bc879eda3b9cab8394b07d4}\label{command__reader_8h_af3a5b13f2bc879eda3b9cab8394b07d4} 
+\index{command\_reader.h@{command\_reader.h}!readCommandLine@{readCommandLine}}
+\index{readCommandLine@{readCommandLine}!command\_reader.h@{command\_reader.h}}
+\doxysubsubsection{\texorpdfstring{readCommandLine()}{readCommandLine()}}
+{\footnotesize\ttfamily char \texorpdfstring{$\ast$}{*} read\+Command\+Line (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})}
+
+
+
+Lit une ligne de commande depuis stdin. 
+
+\begin{DoxyReturn}{Returns}
+Pointeur vers un buffer statique contenant la ligne, ou NULL en cas d\textquotesingle{}EOF. 
+\end{DoxyReturn}

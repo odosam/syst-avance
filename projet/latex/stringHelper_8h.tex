@@ -1,0 +1,83 @@
+\doxysection{utils/string\+Helper.h File Reference}
+\hypertarget{stringHelper_8h}{}\label{stringHelper_8h}\index{utils/stringHelper.h@{utils/stringHelper.h}}
+
+
+Fonctions utilitaires pour la manipulation de chaînes.  
+
+
+{\ttfamily \#include $<$string.\+h$>$}\newline
+{\ttfamily \#include $<$stdlib.\+h$>$}\newline
+Include dependency graph for string\+Helper.\+h\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=204pt]{stringHelper_8h__incl}
+\end{center}
+\end{figure}
+This graph shows which files directly or indirectly include this file\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{stringHelper_8h__dep__incl}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{stringHelper_8h_a857e7766ee7dbb02cf9ef0c08d250664}\label{stringHelper_8h_a857e7766ee7dbb02cf9ef0c08d250664} 
+\#define {\bfseries COMMAND\+\_\+\+MAX\+\_\+\+LENGTH}~1024
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+char \texorpdfstring{$\ast$}{*}\texorpdfstring{$\ast$}{*} \mbox{\hyperlink{stringHelper_8h_aa5654f5d552941cccefca0f94ebb5410}{split\+Command\+Line}} (const char \texorpdfstring{$\ast$}{*}command\+Line, int \texorpdfstring{$\ast$}{*}word\+Count)
+\begin{DoxyCompactList}\small\item\em Découpe une ligne de commande en tableau de mots. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{stringHelper_8h_abcd6d63d2bd5a0c779856536fdc5c810}{free\+Words}} (char \texorpdfstring{$\ast$}{*}\texorpdfstring{$\ast$}{*}words, int count)
+\begin{DoxyCompactList}\small\item\em Libère un tableau de mots. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Fonctions utilitaires pour la manipulation de chaînes. 
+
+
+
+\doxysubsection{Function Documentation}
+\Hypertarget{stringHelper_8h_abcd6d63d2bd5a0c779856536fdc5c810}\label{stringHelper_8h_abcd6d63d2bd5a0c779856536fdc5c810} 
+\index{stringHelper.h@{stringHelper.h}!freeWords@{freeWords}}
+\index{freeWords@{freeWords}!stringHelper.h@{stringHelper.h}}
+\doxysubsubsection{\texorpdfstring{freeWords()}{freeWords()}}
+{\footnotesize\ttfamily void free\+Words (\begin{DoxyParamCaption}\item[{char \texorpdfstring{$\ast$}{*}\texorpdfstring{$\ast$}{*}}]{words,  }\item[{int}]{count }\end{DoxyParamCaption})}
+
+
+
+Libère un tableau de mots. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em words} & Le tableau de mots à libérer. \\
+\hline
+{\em count} & Le nombre de mots dans le tableau. \\
+\hline
+\end{DoxyParams}
+\Hypertarget{stringHelper_8h_aa5654f5d552941cccefca0f94ebb5410}\label{stringHelper_8h_aa5654f5d552941cccefca0f94ebb5410} 
+\index{stringHelper.h@{stringHelper.h}!splitCommandLine@{splitCommandLine}}
+\index{splitCommandLine@{splitCommandLine}!stringHelper.h@{stringHelper.h}}
+\doxysubsubsection{\texorpdfstring{splitCommandLine()}{splitCommandLine()}}
+{\footnotesize\ttfamily char \texorpdfstring{$\ast$}{*}\texorpdfstring{$\ast$}{*} split\+Command\+Line (\begin{DoxyParamCaption}\item[{const char \texorpdfstring{$\ast$}{*}}]{command\+Line,  }\item[{int \texorpdfstring{$\ast$}{*}}]{word\+Count }\end{DoxyParamCaption})}
+
+
+
+Découpe une ligne de commande en tableau de mots. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em command\+Line} & La ligne de commande à découper. \\
+\hline
+{\em word\+Count} & Pointeur vers le nombre de mots (sortie). \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Tableau de mots alloué dynamiquement. 
+\end{DoxyReturn}

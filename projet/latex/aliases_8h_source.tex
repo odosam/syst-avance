@@ -1,0 +1,24 @@
+\doxysection{aliases.\+h}
+\hypertarget{aliases_8h_source}{}\label{aliases_8h_source}\index{commands/alias/aliases.h@{commands/alias/aliases.h}}
+\mbox{\hyperlink{aliases_8h}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{preprocessor}{\#pragma\ once}}
+\DoxyCodeLine{00002\ }
+\DoxyCodeLine{00008\ \textcolor{preprocessor}{\#include\ <stdlib.h>}}
+\DoxyCodeLine{00009\ \textcolor{preprocessor}{\#include\ <string.h>}}
+\DoxyCodeLine{00010\ \textcolor{preprocessor}{\#include\ "{}../../utils/stringHelper.h"{}}}
+\DoxyCodeLine{00011\ }
+\DoxyCodeLine{00012\ \textcolor{preprocessor}{\#define\ MAX\_ALIASES\ 100}}
+\DoxyCodeLine{00013\ }
+\DoxyCodeLine{00018\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{struct}}
+\DoxyCodeLine{00019\ \{}
+\DoxyCodeLine{00020\ \ \ \ \ \textcolor{keywordtype}{char}\ *name;}
+\DoxyCodeLine{00021\ \ \ \ \ \textcolor{keywordtype}{char}\ **words;}
+\DoxyCodeLine{00022\ \ \ \ \ \textcolor{keywordtype}{int}\ wordCount;}
+\DoxyCodeLine{00023\ \}\ \mbox{\hyperlink{structAlias}{Alias}};}
+\DoxyCodeLine{00024\ }
+\DoxyCodeLine{00031\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{aliases_8h_ac16925fc9f393b9cad2fd5a82091a080}{setAlias}}(\textcolor{keyword}{const}\ \textcolor{keywordtype}{char}\ *name,\ \textcolor{keywordtype}{char}\ **words,\ \textcolor{keywordtype}{int}\ wordCount);}
+\DoxyCodeLine{00032\ }
+\DoxyCodeLine{00039\ \textcolor{keywordtype}{char}\ **\mbox{\hyperlink{aliases_8h_aa08ad50d21b799f18bce601a31eb6246}{substituteAlias}}(\textcolor{keywordtype}{char}\ **words,\ \textcolor{keywordtype}{int}\ *wordCount);}
+
+\end{DoxyCode}

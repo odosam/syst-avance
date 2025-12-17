@@ -1,0 +1,24 @@
+\doxysection{command\+\_\+reader.\+h}
+\hypertarget{command__reader_8h_source}{}\label{command__reader_8h_source}\index{commands/command\_reader.h@{commands/command\_reader.h}}
+\mbox{\hyperlink{command__reader_8h}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{preprocessor}{\#pragma\ once}}
+\DoxyCodeLine{00002\ }
+\DoxyCodeLine{00008\ \textcolor{preprocessor}{\#include\ <stdlib.h>}}
+\DoxyCodeLine{00009\ \textcolor{preprocessor}{\#include\ <stdio.h>}}
+\DoxyCodeLine{00010\ \textcolor{preprocessor}{\#include\ <string.h>}}
+\DoxyCodeLine{00011\ }
+\DoxyCodeLine{00012\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{command_8h}{command.h}}"{}}}
+\DoxyCodeLine{00013\ \textcolor{preprocessor}{\#include\ "{}../utils/stringHelper.h"{}}}
+\DoxyCodeLine{00014\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{env__vars_8h}{env\_vars/env\_vars.h}}"{}}}
+\DoxyCodeLine{00015\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{aliases_8h}{alias/aliases.h}}"{}}}
+\DoxyCodeLine{00016\ }
+\DoxyCodeLine{00017\ \textcolor{preprocessor}{\#define\ MAX\_COMMANDS\_PER\_LINE\ 10}}
+\DoxyCodeLine{00018\ }
+\DoxyCodeLine{00023\ \textcolor{keywordtype}{char}\ *\mbox{\hyperlink{command__reader_8h_af3a5b13f2bc879eda3b9cab8394b07d4}{readCommandLine}}(\textcolor{keywordtype}{void});}
+\DoxyCodeLine{00024\ }
+\DoxyCodeLine{00031\ \textcolor{keyword}{struct\ }\mbox{\hyperlink{structCommand}{Command}}\ *\mbox{\hyperlink{command__reader_8h_a73cb9a8d41f0fb19926e6f1e98963c61}{parseCommand}}(\textcolor{keywordtype}{char}\ *commandLine,\ \textcolor{keywordtype}{int}\ *commandCount);}
+\DoxyCodeLine{00032\ }
+\DoxyCodeLine{00038\ \textcolor{keyword}{enum}\ \mbox{\hyperlink{command_8h_a7215803e478cdd4bdf4f1b8087cae87b}{Operator}}\ \mbox{\hyperlink{command__reader_8h_a18986b6dfd2065c8fb8c94b74a7422a2}{getOperator}}(\textcolor{keyword}{const}\ \textcolor{keywordtype}{char}\ *token);}
+
+\end{DoxyCode}

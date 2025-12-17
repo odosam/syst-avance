@@ -1,0 +1,25 @@
+<map id="commands/command_reader.h" name="commands/command_reader.h">
+<area shape="rect" id="Node000001" title="Lecture et parsing des lignes de commande." alt="" coords="188,5,411,31"/>
+<area shape="rect" id="Node000002" title=" " alt="" coords="97,225,168,251"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="188,31,85,49,44,63,19,80,10,98,9,116,16,135,29,154,65,188,103,216,100,220,61,192,25,157,11,137,4,117,4,97,15,77,42,58,84,44,187,26"/>
+<area shape="rect" id="Node000003" title=" " alt="" coords="453,79,519,104"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="330,28,444,71,442,76,328,33"/>
+<area shape="rect" id="Node000004" title=" " alt="" coords="228,225,299,251"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="332,28,365,47,380,61,392,78,396,91,392,105,380,145,355,179,328,203,300,221,297,217,325,198,351,176,375,143,387,103,390,91,387,80,376,65,362,52,330,33"/>
+<area shape="rect" id="Node000005" href="$command_8h.html" title="Définitions des structures de commandes du shell." alt="" coords="543,79,642,104"/>
+<area shape="poly" id="edge4_Node000001_Node000005" title=" " alt="" coords="347,28,533,73,531,78,346,33"/>
+<area shape="rect" id="Node000006" href="$stringHelper_8h.html" title="Fonctions utilitaires pour la manipulation de chaînes." alt="" coords="119,152,277,177"/>
+<area shape="poly" id="edge5_Node000001_Node000006" title=" " alt="" coords="272,33,239,52,224,65,212,80,201,109,199,139,194,138,196,108,208,77,221,61,236,48,269,29"/>
+<area shape="rect" id="Node000007" href="$env__vars_8h.html" title="Gestion des variables d&#39;environnement." alt="" coords="221,79,377,104"/>
+<area shape="poly" id="edge8_Node000001_Node000007" title=" " alt="" coords="302,31,302,65,297,65,297,31"/>
+<area shape="rect" id="Node000008" href="$aliases_8h.html" title="Gestion des alias de commandes." alt="" coords="29,79,143,104"/>
+<area shape="poly" id="edge12_Node000001_Node000008" title=" " alt="" coords="266,33,134,77,132,72,264,28"/>
+<area shape="poly" id="edge7_Node000006_Node000002" title=" " alt="" coords="189,179,154,217,150,213,185,176"/>
+<area shape="poly" id="edge6_Node000006_Node000004" title=" " alt="" coords="211,176,245,213,241,217,207,179"/>
+<area shape="poly" id="edge9_Node000007_Node000002" title=" " alt="" coords="304,104,305,140,300,160,291,179,268,201,240,217,210,227,182,234,181,229,209,222,238,212,264,196,286,176,295,159,299,139,299,105"/>
+<area shape="poly" id="edge10_Node000007_Node000004" title=" " alt="" coords="312,103,333,136,339,157,335,178,319,202,298,220,294,216,315,198,330,176,333,158,328,138,308,106"/>
+<area shape="poly" id="edge11_Node000007_Node000006" title=" " alt="" coords="284,106,227,146,224,142,281,102"/>
+<area shape="poly" id="edge13_Node000008_Node000002" title=" " alt="" coords="80,105,65,138,62,158,66,176,81,198,102,216,98,220,77,202,61,178,57,158,60,137,76,103"/>
+<area shape="poly" id="edge14_Node000008_Node000004" title=" " alt="" coords="88,104,92,139,98,158,109,176,132,195,159,210,215,228,214,233,157,215,129,200,105,179,94,161,87,140,83,104"/>
+<area shape="poly" id="edge15_Node000008_Node000006" title=" " alt="" coords="105,102,169,142,166,147,102,106"/>
+</map>

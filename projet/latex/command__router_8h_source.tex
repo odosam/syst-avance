@@ -1,0 +1,34 @@
+\doxysection{command\+\_\+router.\+h}
+\hypertarget{command__router_8h_source}{}\label{command__router_8h_source}\index{commands/command\_router.h@{commands/command\_router.h}}
+\mbox{\hyperlink{command__router_8h}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{preprocessor}{\#pragma\ once}}
+\DoxyCodeLine{00002\ }
+\DoxyCodeLine{00008\ \textcolor{preprocessor}{\#include\ <stdbool.h>}}
+\DoxyCodeLine{00009\ \textcolor{preprocessor}{\#include\ <stdlib.h>}}
+\DoxyCodeLine{00010\ \textcolor{preprocessor}{\#include\ <stdio.h>}}
+\DoxyCodeLine{00011\ \textcolor{preprocessor}{\#include\ <string.h>}}
+\DoxyCodeLine{00012\ \textcolor{preprocessor}{\#include\ <unistd.h>}}
+\DoxyCodeLine{00013\ \textcolor{preprocessor}{\#include\ <fcntl.h>}}
+\DoxyCodeLine{00014\ \textcolor{preprocessor}{\#include\ <sys/wait.h>}}
+\DoxyCodeLine{00015\ }
+\DoxyCodeLine{00016\ \textcolor{preprocessor}{\#include\ "{}../state/programState.h"{}}}
+\DoxyCodeLine{00017\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{command_8h}{command.h}}"{}}}
+\DoxyCodeLine{00018\ \textcolor{preprocessor}{\#include\ "{}../utils/pathHelper.h"{}}}
+\DoxyCodeLine{00019\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{history_8h}{history/history.h}}"{}}}
+\DoxyCodeLine{00020\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{aliases_8h}{alias/aliases.h}}"{}}}
+\DoxyCodeLine{00021\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{env__vars_8h}{env\_vars/env\_vars.h}}"{}}}
+\DoxyCodeLine{00022\ }
+\DoxyCodeLine{00026\ \textcolor{keyword}{typedef}\ int\ (*\mbox{\hyperlink{command__router_8h_a85fc218007cf6c9bd3063f2bc10a00a3}{NativeCommandFn}})(\textcolor{keyword}{struct\ }\mbox{\hyperlink{structCommand}{Command}}\ *,\ \textcolor{keyword}{struct\ }\mbox{\hyperlink{structProgramState}{ProgramState}}\ *);}
+\DoxyCodeLine{00027\ }
+\DoxyCodeLine{00032\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{struct}}
+\DoxyCodeLine{00033\ \{}
+\DoxyCodeLine{00034\ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}\ *name;}
+\DoxyCodeLine{00035\ \ \ \ \ \mbox{\hyperlink{command__router_8h_a85fc218007cf6c9bd3063f2bc10a00a3}{NativeCommandFn}}\ fn;}
+\DoxyCodeLine{00036\ \}\ \mbox{\hyperlink{structNativeCommand}{NativeCommand}};}
+\DoxyCodeLine{00037\ }
+\DoxyCodeLine{00044\ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{command__router_8h_a824dc2b8a47909f750bc84fb61cdfd75}{executeCommand}}(\textcolor{keyword}{struct}\ \mbox{\hyperlink{structCommand}{Command}}\ *command,\ \textcolor{keyword}{struct}\ \mbox{\hyperlink{structProgramState}{ProgramState}}\ *state);}
+\DoxyCodeLine{00045\ }
+\DoxyCodeLine{00053\ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{command__router_8h_a9ccb47f021c7c86f77159e8195b07ae1}{executePipeline}}(\textcolor{keyword}{struct}\ \mbox{\hyperlink{structCommand}{Command}}\ *commands,\ \textcolor{keywordtype}{int}\ commandCount,\ \textcolor{keyword}{struct}\ \mbox{\hyperlink{structProgramState}{ProgramState}}\ *state);}
+
+\end{DoxyCode}

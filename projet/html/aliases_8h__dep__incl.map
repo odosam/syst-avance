@@ -1,0 +1,7 @@
+<map id="commands/alias/aliases.h" name="commands/alias/aliases.h">
+<area shape="rect" id="Node000001" title="Gestion des alias de commandes." alt="" coords="144,5,335,31"/>
+<area shape="rect" id="Node000002" href="$command__reader_8h.html" title="Lecture et parsing des lignes de commande." alt="" coords="5,79,228,104"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="209,40,138,81,135,76,207,35"/>
+<area shape="rect" id="Node000003" href="$command__router_8h.html" title="Exécution des commandes natives et externes." alt="" coords="252,79,472,104"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="272,35,343,76,341,81,269,40"/>
+</map>

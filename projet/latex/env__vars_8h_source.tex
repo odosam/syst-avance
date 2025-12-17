@@ -1,0 +1,23 @@
+\doxysection{env\+\_\+vars.\+h}
+\hypertarget{env__vars_8h_source}{}\label{env__vars_8h_source}\index{commands/env\_vars/env\_vars.h@{commands/env\_vars/env\_vars.h}}
+\mbox{\hyperlink{env__vars_8h}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{preprocessor}{\#pragma\ once}}
+\DoxyCodeLine{00002\ }
+\DoxyCodeLine{00008\ \textcolor{preprocessor}{\#include\ <stdlib.h>}}
+\DoxyCodeLine{00009\ \textcolor{preprocessor}{\#include\ <string.h>}}
+\DoxyCodeLine{00010\ \textcolor{preprocessor}{\#include\ "{}../../utils/stringHelper.h"{}}}
+\DoxyCodeLine{00011\ }
+\DoxyCodeLine{00012\ \textcolor{preprocessor}{\#define\ MAX\_ENV\_VARS\ 100}}
+\DoxyCodeLine{00013\ }
+\DoxyCodeLine{00018\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{struct}}
+\DoxyCodeLine{00019\ \{}
+\DoxyCodeLine{00020\ \ \ \ \ \textcolor{keywordtype}{char}\ *name;}
+\DoxyCodeLine{00021\ \ \ \ \ \textcolor{keywordtype}{char}\ *value;}
+\DoxyCodeLine{00022\ \}\ \mbox{\hyperlink{structEnvVar}{EnvVar}};}
+\DoxyCodeLine{00023\ }
+\DoxyCodeLine{00029\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{env__vars_8h_ac32b99d0d3944b4f243d16722d0c6ec4}{setEnvVar}}(\textcolor{keyword}{const}\ \textcolor{keywordtype}{char}\ *name,\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}\ *value);}
+\DoxyCodeLine{00030\ }
+\DoxyCodeLine{00037\ \textcolor{keywordtype}{char}\ **\mbox{\hyperlink{env__vars_8h_ad89ee9c9886520fe4ca9a3e319f2c1fa}{substituteEnvVars}}(\textcolor{keywordtype}{char}\ **words,\ \textcolor{keywordtype}{int}\ *wordCount);}
+
+\end{DoxyCode}

@@ -1,0 +1,91 @@
+\doxysection{commands/alias/aliases.h File Reference}
+\hypertarget{aliases_8h}{}\label{aliases_8h}\index{commands/alias/aliases.h@{commands/alias/aliases.h}}
+
+
+Gestion des alias de commandes.  
+
+
+{\ttfamily \#include $<$stdlib.\+h$>$}\newline
+{\ttfamily \#include $<$string.\+h$>$}\newline
+{\ttfamily \#include "{}../../utils/string\+Helper.\+h"{}}\newline
+Include dependency graph for aliases.\+h\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=232pt]{aliases_8h__incl}
+\end{center}
+\end{figure}
+This graph shows which files directly or indirectly include this file\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{aliases_8h__dep__incl}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+struct \mbox{\hyperlink{structAlias}{Alias}}
+\begin{DoxyCompactList}\small\item\em Structure représentant un alias de commande. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{aliases_8h_a6716a5668174f9bb9c687640ae39b356}\label{aliases_8h_a6716a5668174f9bb9c687640ae39b356} 
+\#define {\bfseries MAX\+\_\+\+ALIASES}~100
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{aliases_8h_ac16925fc9f393b9cad2fd5a82091a080}{set\+Alias}} (const char \texorpdfstring{$\ast$}{*}name, char \texorpdfstring{$\ast$}{*}\texorpdfstring{$\ast$}{*}words, int word\+Count)
+\begin{DoxyCompactList}\small\item\em Enregistre un nouvel alias. \end{DoxyCompactList}\item 
+char \texorpdfstring{$\ast$}{*}\texorpdfstring{$\ast$}{*} \mbox{\hyperlink{aliases_8h_aa08ad50d21b799f18bce601a31eb6246}{substitute\+Alias}} (char \texorpdfstring{$\ast$}{*}\texorpdfstring{$\ast$}{*}words, int \texorpdfstring{$\ast$}{*}word\+Count)
+\begin{DoxyCompactList}\small\item\em Substitue les alias dans un tableau de mots. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Gestion des alias de commandes. 
+
+
+
+\doxysubsection{Function Documentation}
+\Hypertarget{aliases_8h_ac16925fc9f393b9cad2fd5a82091a080}\label{aliases_8h_ac16925fc9f393b9cad2fd5a82091a080} 
+\index{aliases.h@{aliases.h}!setAlias@{setAlias}}
+\index{setAlias@{setAlias}!aliases.h@{aliases.h}}
+\doxysubsubsection{\texorpdfstring{setAlias()}{setAlias()}}
+{\footnotesize\ttfamily void set\+Alias (\begin{DoxyParamCaption}\item[{const char \texorpdfstring{$\ast$}{*}}]{name,  }\item[{char \texorpdfstring{$\ast$}{*}\texorpdfstring{$\ast$}{*}}]{words,  }\item[{int}]{word\+Count }\end{DoxyParamCaption})}
+
+
+
+Enregistre un nouvel alias. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em name} & Le nom de l\textquotesingle{}alias. \\
+\hline
+{\em words} & Les mots de remplacement. \\
+\hline
+{\em word\+Count} & Le nombre de mots. \\
+\hline
+\end{DoxyParams}
+\Hypertarget{aliases_8h_aa08ad50d21b799f18bce601a31eb6246}\label{aliases_8h_aa08ad50d21b799f18bce601a31eb6246} 
+\index{aliases.h@{aliases.h}!substituteAlias@{substituteAlias}}
+\index{substituteAlias@{substituteAlias}!aliases.h@{aliases.h}}
+\doxysubsubsection{\texorpdfstring{substituteAlias()}{substituteAlias()}}
+{\footnotesize\ttfamily char \texorpdfstring{$\ast$}{*}\texorpdfstring{$\ast$}{*} substitute\+Alias (\begin{DoxyParamCaption}\item[{char \texorpdfstring{$\ast$}{*}\texorpdfstring{$\ast$}{*}}]{words,  }\item[{int \texorpdfstring{$\ast$}{*}}]{word\+Count }\end{DoxyParamCaption})}
+
+
+
+Substitue les alias dans un tableau de mots. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em words} & Le tableau de mots à traiter. \\
+\hline
+{\em word\+Count} & Pointeur vers le nombre de mots (entrée/sortie). \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Nouveau tableau de mots (l\textquotesingle{}ancien est libéré). 
+\end{DoxyReturn}
